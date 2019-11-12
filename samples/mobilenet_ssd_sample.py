@@ -2,8 +2,8 @@
 SSD detection sample
  
 Command line using example
- 
-python mobilenet_ssd_sample.py -p ../models/mobilenet-ssd.prototxt -m ../models/mobilenet-ssd.caffemodel -i ../data/dog.jpg -t detection -me 127.5 127.5 127.5 -s 0.0039 -sh 224 224
+
+python mobilenet_ssd_sample.py -p ../models/mobilenet-ssd.xml -m ../models/mobilenet-ssd.bin -i ../data/dog.jpg -t detection -l D:\Intel\openvino_2019.3.379\inference_engine\bin\intel64\Release\cpu_extension_avx2.dll
 """
 
 import sys
@@ -12,6 +12,7 @@ import argparse
 
 sys.path.append('../src')
 from dnn_detector import DnnDetector
+from openvino_dnn_detector import OpenvinoDnnDetector
 
 def build_argparse():
     parser=argparse.ArgumentParser()
@@ -23,12 +24,9 @@ def build_argparse():
         default='', type=str)
     parser.add_argument('-t', '--task_type', help='Task type: \
         detection', default = 'detection', type=str)
-    parser.add_argument('-me', '--mean', help='Input mean values', 
-                        default = '0 0 0', type=float, nargs=3)
-    parser.add_argument('-s', '--scale', help='scale value', 
-        required=True, type=float)
-    parser.add_argument('-sh', '--shape', help='Network input size',
-                        default = '300 300', type=int, nargs=2)
+    parser.add_argument("-l", "--cpu_extension",
+        help="Optional. Required for CPU custom layers. Absolute path to a shared library with the kernels implementations.",
+        type=str, default=None)
     return parser
 
 def main():
@@ -37,8 +35,8 @@ def main():
     
     image_src = cv2.imread(args.image)
 
-    detector = DnnDetector(args.model, args.proto, args.task_type, tuple(args.shape),
-                           args.scale, args.mean)
+    detector = OpenvinoDnnDetector(args.model, args.proto, args.task_type,
+                                   args.cpu_extension)
 
     image_detected = detector.detect(image_src)
 
