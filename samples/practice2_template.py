@@ -1,9 +1,8 @@
 ﻿"""
 
-SSD detection sample
+Inference engine detector sample
  
 """
-
 import sys
 import cv2
 import argparse
@@ -12,7 +11,7 @@ sys.path.append('../src')
 from ie_detector import InferenceEngineDetector
 
 def build_argparse():
-    parser=argparse.ArgumentParser()
+    parser = argparse.ArgumentParser()
     
     #
     # Add your code here
@@ -21,7 +20,8 @@ def build_argparse():
     return parser
 
 def main():
-    log.basicConfig(format="[ %(levelname)s ] %(message)s", level=log.INFO, stream=sys.stdout)
+    log.basicConfig(format = "[%(levelname)s] %(message)s", level = log.INFO, 
+                               stream = sys.stdout)
     log.info("Hello object detection!")
     args = build_argparse().parse_args()
     

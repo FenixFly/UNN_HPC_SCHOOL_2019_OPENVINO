@@ -1,17 +1,22 @@
+"""
+
+Inference engine detector
+ 
+"""
 import cv2
-import numpy
+import numpy as np
 from openvino.inference_engine import IENetwork, IECore
 
 class InferenceEngineDetector:
-    def __init__(self, weightsPath=None, configPath=None,
-                 device='CPU', extension = None):
+    def __init__(self, weightsPath = None, configPath = None,
+                 device = 'CPU', extension = None):
         #
         # Add your code here
         #
         
         return
 
-    def _output_detection(self, output, img):
+    def draw_detection(self, detections, img):
     
         #
         # Add your code here
@@ -32,5 +37,6 @@ class InferenceEngineDetector:
         #
         # Add your code here
         #
+        detection = None
         
-        return self._output_detection(output, image)
+        return detection
